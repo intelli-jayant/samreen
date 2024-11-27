@@ -1,24 +1,32 @@
- const mongoose=require("mongoose")
+const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/project11")
-.then(()=>{
-    console.log("mongodb connected");
-})
-.catch((e)=>{
-    console.log("failed to connect");
-})
+// MongoDB connection using the provided MongoDB Atlas connection string
+mongoose
+  .connect("mongodb://127.0.0.1:27017/rani", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((error) => {
+    console.error("Failed to connect to MongoDB:", error);
+  });
 
-const LogInSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
-    },
-    password:{
-        type:String,
-        required:true
-    }
-})
+// Define the schema for login credentials
+const LogInSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
 
-const collection=new mongoose.model("LoginCollection",LogInSchema)
+// Create the model
+const collection = mongoose.model("LoginCollection", LogInSchema);
 
-module.exports=collection
+// Export the model for use in other files
+module.exports = collection;
